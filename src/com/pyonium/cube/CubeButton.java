@@ -9,6 +9,17 @@ public class CubeButton extends Button {
 
     public CubeButton(int _id, int _color){
         super(String.valueOf(_id));
+        id = _id;
         color = _color;
+        InputWindow.buttons.put(_id, this);
+        updateColor();
+    }
+
+    public void updateColor(){
+        switch(color){
+            case 0:
+                this.setBackground(Color.YELLOW);
+                break;
+        }
     }
 }

@@ -1,12 +1,15 @@
 package com.pyonium.cube;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class InputWindow extends Frame {
 
     /*
      * A solved cube has the string "yyyyggggwwwwbbbbrrrroooo". Flat projection, first top to bottom, then left to right.
      */
+
+    static HashMap<Integer, Button> buttons = new HashMap<>();
 
     Container[] columns = new Container[6];
 
