@@ -59,6 +59,7 @@ public class Cube {
      * If the cube is rotated and doesn't move on the Y axis, we increment by two on clockwise moves,
      * and by one on counterclockwise moves. Since we %3, to and from cancel each other out.
      *
+     * Code template from KitN on Github, but wrote the algorithm myself.
      *      ---------
      *    / 0    1 / |
      *   /_2____3_/  |
