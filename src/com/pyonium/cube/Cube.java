@@ -44,11 +44,14 @@ public class Cube {
          */
         for(int i = 0; i < 8; i++){
             int index = 0;
-            while(true){
-                if(Arrays.equals(cublets[i], cubletColors[index])){
+            while (true) {
+                if (Arrays.equals(cublets[i], cubletColors[index])) {
                     break;
                 }
                 index++;
+                if(index > 23){
+                    break;
+                }
             }
             cubletsPosition[i] = index / 3;
             cubletsRotation[i] = index % 3;
@@ -157,6 +160,33 @@ public class Cube {
         cubletsRotation = startRot;
 
         return answer;
+    }
+
+    public static Cube makeCube(){
+        String cubeString = "";
+        for(int i = 0; i < 24; i++){
+            switch(InputWindow.buttons.get(i).getColor()){
+                case 0:
+                    cubeString += "y";
+                    break;
+                case 1:
+                    cubeString += "g";
+                    break;
+                case 2:
+                    cubeString += "w";
+                    break;
+                case 3:
+                    cubeString += "b";
+                    break;
+                case 4:
+                    cubeString += "r";
+                    break;
+                case 5:
+                    cubeString += "o";
+                    break;
+            }
+        }
+        return new Cube(cubeString);
     }
 
 }

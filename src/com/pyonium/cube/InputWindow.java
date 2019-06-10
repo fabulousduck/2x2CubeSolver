@@ -1,6 +1,9 @@
 package com.pyonium.cube;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class InputWindow extends Frame {
@@ -9,7 +12,7 @@ public class InputWindow extends Frame {
      * A solved cube has the string "yyyyggggwwwwbbbbrrrroooo". Flat projection, first top to bottom, then left to right.
      */
 
-    static HashMap<Integer, Button> buttons = new HashMap<>();
+    static HashMap<Integer, CubeButton> buttons = new HashMap<>();
 
     Container[] columns = new Container[6];
 
@@ -23,12 +26,59 @@ public class InputWindow extends Frame {
             p.add(columns[i]);
         }
         for(int i = 0; i <= 14; i = i + 2){
-            CubeButton c = new CubeButton(i, 0);
+            CubeButton c = new CubeButton(i);
             columns[2].add(c);
         }
         for(int i = 1; i <= 15; i = i + 2){
-            CubeButton c = new CubeButton(i, 0);
+            CubeButton c = new CubeButton(i);
             columns[3].add(c);
+        }
+        for(int i = 0; i < 8; i++){
+            if(i == 2 || i == 3){
+                CubeButton c = new CubeButton(12 + 2 * i);
+                columns[0].add(c);
+            } else {
+                JLabel j = new JLabel("");
+                columns[0].add(j);
+            }
+        }
+        for(int i = 0; i < 8; i++){
+            if(i == 2 || i == 3){
+                CubeButton c = new CubeButton(13 + 2 * i);
+                columns[1].add(c);
+            } else {
+                JLabel j = new JLabel("");
+                columns[1].add(j);
+            }
+        }
+        for(int i = 0; i < 8; i++){
+            if(i == 2 || i == 3){
+                CubeButton c = new CubeButton(16 + 2 * i);
+                columns[4].add(c);
+            } else {
+                JLabel j = new JLabel("");
+                columns[4].add(j);
+            }
+        }
+        for(int i = 0; i < 7; i++){
+            if(i == 2 || i == 3){
+                CubeButton c = new CubeButton(17 + 2 * i);
+                columns[5].add(c);
+            } else {
+                JLabel j = new JLabel("");
+                columns[5].add(j);
+            }
+        }
+        Button b = new Button("Solve!");
+        b.addActionListener(e -> {
+            Cube.makeCube().solve();
+        });
+        columns[5].add(b);
+
+        for(int i = 0; i < 24; i++){
+            buttons.get(i).addActionListener(e -> {
+                buttons.get(Integer.parseInt(e.getActionCommand())).incrementColor();
+            });
         }
     }
 
@@ -37,8 +87,8 @@ public class InputWindow extends Frame {
         w.setTitle("kut");
         w.setSize(400, 600);
         w.setVisible(true);
-        Cube c = new Cube("ooggwwgorbwrbyybgrryowyb");
-        c.solve();
+//        Cube c = new Cube("ooggwwgorbwrbyybgrryowyb");
+//        c.solve();
     }
 
 }
