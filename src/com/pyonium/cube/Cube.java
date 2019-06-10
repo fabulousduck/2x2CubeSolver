@@ -23,7 +23,12 @@ public class Cube {
         cublets[6] = new char[]{input[8],  input[19], input[6] };
         cublets[7] = new char[]{input[9],  input[7],  input[22]};
 
-        char[][] cubieColors = new char[][]{
+        /*
+         * On a 2d projection, The white / yellow faces need to be on top. If they're not, they are either rotated once or twice.
+         * These are all the possibilities of the cubes.
+         * Courtesy of the excellent KitN on Github.
+         */
+        char[][] cubletColors = new char[][]{
                 {'y', 'r', 'b'}, {'r', 'b', 'y'}, {'b', 'y', 'r'},
                 {'y', 'b', 'o'}, {'b', 'o', 'y'}, {'o', 'y', 'b'},
                 {'y', 'g', 'r'}, {'g', 'r', 'y'}, {'r', 'y', 'g'},
@@ -34,10 +39,13 @@ public class Cube {
                 {'w', 'g', 'o'}, {'g', 'o', 'w'}, {'o', 'w', 'g'}
         };
 
+        /*
+         * Here we map our current input to a cube. If we find a valid cublet, we map it in our position / rotation mapping.
+         */
         for(int i = 0; i < 8; i++){
             int index = 0;
             while(true){
-                if(Arrays.equals(cublets[i], cubieColors[index])){
+                if(Arrays.equals(cublets[i], cubletColors[index])){
                     break;
                 }
                 index++;
@@ -47,6 +55,17 @@ public class Cube {
         }
     }
 
+    /*
+     * If the cube is rotated and doesn't move on the Y axis, we increment by two on clockwise moves,
+     * and by one on counterclockwise moves. Since we %3, to and from cancel each other out.
+     *
+     *      ---------
+     *    / 0    1 / |
+     *   /_2____3_/  |
+     *   |        |  |
+     *   | 4    5 | /
+     *   |6____7__|/
+     */
     public void rotate(String[] moves){
         for (String face : moves){
             switch (face) {
@@ -80,6 +99,10 @@ public class Cube {
         }
     }
 
+    /*
+     * Let's try to solve the cube 14 turns deep. It returns an array of moves, so we concatenate it to a string,
+     * and print the result. Solved!
+     */
     public void solve(){
         String[] turns = trySolve(14);
         for(int i = 0; i < turns.length; ++i){
@@ -92,18 +115,23 @@ public class Cube {
         System.out.println("Amount of moves: " + moveCount);
     }
 
+    /*
+     * Where the magic happens. I create n base 6 digits, where n is the solve depth, and map each of those to
+     * their own move. Then I iterate through all the moves. If everything is correct (cube 0 is at pos 0 etc.)
+     * and all cubes aren't rotated (have rotation 0), they're solved.
+     */
     public String[] trySolve(int depth){
         String[] answer = {"None found."};
         int[] startPos = new int[8];
         int[] startRot = new int[8];
         startPos = cubletsPosition;
         startRot = cubletsRotation;
-        String senaryDigits = "";
+        String baseSixDigits = "";
         for(int i = 0; i < depth; i++){
-            senaryDigits += "5";
+            baseSixDigits += "5";
         }
 
-        for(long i = 0; i <= Long.parseLong(senaryDigits, 6); i++){
+        for(long i = 0; i <= Long.parseLong(baseSixDigits, 6); i++){
             cubletsPosition = startPos;
             cubletsRotation = startRot;
             String moveString = Long.toString(i, 6);
