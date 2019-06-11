@@ -12,6 +12,7 @@ public class InputWindow extends Frame {
      * A solved cube has the string "yyyyggggwwwwbbbbrrrroooo". Flat projection, first top to bottom, then left to right.
      */
 
+    static InputWindow w;
     static HashMap<Integer, CubeButton> buttons = new HashMap<>();
 
     Container[] columns = new Container[6];
@@ -83,12 +84,10 @@ public class InputWindow extends Frame {
     }
 
     public static void main(String[] args){
-        InputWindow w = new InputWindow();
+        w = new InputWindow();
         w.setTitle("kut");
         w.setSize(400, 600);
         w.setVisible(true);
-//        Cube c = new Cube("ooggwwgorbwrbyybgrryowyb");
-//        c.solve();
     }
 
 }

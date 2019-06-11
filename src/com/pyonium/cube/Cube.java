@@ -1,5 +1,7 @@
 package com.pyonium.cube;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 
 public class Cube {
@@ -62,7 +64,6 @@ public class Cube {
      * If the cube is rotated and doesn't move on the Y axis, we increment by two on clockwise moves,
      * and by one on counterclockwise moves. Since we %3, to and from cancel each other out.
      *
-     * Code template from KitN on Github, but wrote the algorithm myself.
      *      ---------
      *    / 0    1 / |
      *   /_2____3_/  |
@@ -106,6 +107,10 @@ public class Cube {
     /*
      * Let's try to solve the cube 14 turns deep. It returns an array of moves, so we concatenate it to a string,
      * and print the result. Solved!
+     * 14 turns isn't actually computationally possible with this implementation, but it works.
+     *
+     * Two test cases: y y r w g o w o o y w b b y r r g w r b g b g o
+     * and another: o o g g w w g o r b w r b y y b g r r y o w y b
      */
     public void solve(){
         String[] turns = trySolve(14);
@@ -117,6 +122,8 @@ public class Cube {
 
         System.out.println(moveList);
         System.out.println("Amount of moves: " + moveCount);
+
+        JOptionPane.showMessageDialog(new Frame(), moveList + " solved in " + moveCount + " moves");
     }
 
     /*
@@ -150,6 +157,9 @@ public class Cube {
                 if(cubletsPosition[j] == j && cubletsRotation[j] == 0){
                     correct++;
                 }
+            }
+            if(i % 100000 == 0){
+                InputWindow.w.setTitle(i + " / " + Long.parseLong(baseSixDigits, 6));
             }
             if(correct == 8){
                 answer = usedMoves;
